@@ -1,0 +1,812 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Jayanth Kumar • AI Portfolio</title>
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet" />
+    <style>
+        :root {
+            --bg: #101826;
+            --bg-elev: #162132;
+            --text: #e6edf7;
+            --muted: #a9b4c3;
+            --accent: #0ef;
+            --card: #0f1522;
+            --border: #263142;
+            --shadow: 0 10px 30px rgba(0, 0, 0, .35);
+        }
+
+        [data-theme="light"] {
+            --bg: #f6f8fc;
+            --bg-elev: #ffffff;
+            --text: #0b1220;
+            --muted: #4b5565;
+            --accent: #0ea5e9;
+            --card: #ffffff;
+            --border: #e5e7eb;
+            --shadow: 0 8px 24px rgba(15, 23, 42, .08);
+        }
+
+        * {
+            box-sizing: border-box
+        }
+
+        html {
+            scroll-behavior: smooth
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Poppins', system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, 'Helvetica Neue', Arial, "Noto Sans", sans-serif;
+            background: var(--bg);
+            color: var(--text);
+        }
+
+        /* Header */
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            backdrop-filter: blur(8px);
+            background: color-mix(in srgb, var(--bg) 85%, transparent);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .nav {
+            max-width: 1100px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+            padding: 1rem 1.2rem;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: .75rem;
+            font-weight: 700;
+            letter-spacing: .3px
+        }
+
+        .brand img {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            box-shadow: var(--shadow)
+        }
+
+        .brand span {
+            font-size: 1.1rem
+        }
+
+        .links {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            flex-wrap: wrap
+        }
+
+        .links a {
+            color: var(--muted);
+            text-decoration: none;
+            padding: .6rem .9rem;
+            border-radius: 999px;
+            font-weight: 500;
+            font-size: .95rem;
+            transition: all .2s ease;
+        }
+
+        .links a:hover {
+            color: var(--text);
+            background: var(--bg-elev);
+            box-shadow: var(--shadow);
+            transform: translateY(-2px)
+        }
+
+        .links a.active {
+            color: var(--text);
+            outline: 2px solid color-mix(in srgb, var(--accent) 70%, transparent);
+            background: color-mix(in srgb, var(--accent) 15%, var(--bg-elev) 85%)
+        }
+
+        /* Theme toggle */
+        .toggle {
+            display: inline-flex;
+            align-items: center;
+            gap: .5rem;
+            cursor: pointer;
+            border: 1px solid var(--border);
+            padding: .5rem .75rem;
+            border-radius: 999px;
+            background: var(--bg-elev)
+        }
+
+        .toggle i {
+            font-size: 1.2rem
+        }
+
+        /* Sections */
+        section {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 72px 1.2rem
+        }
+
+        .hero {
+            display: grid;
+            grid-template-columns: 1.3fr .7fr;
+            align-items: center;
+            gap: 2rem;
+            padding-top: 40px
+        }
+
+        .hero h1 {
+            font-size: clamp(2rem, 2.5vw + 1rem, 3.25rem);
+            line-height: 1.1;
+            margin: .2rem 0 1rem
+        }
+
+        .hero p {
+            color: var(--muted);
+            font-size: 1.05rem
+        }
+
+        .tag {
+            display: inline-block;
+            padding: .35rem .75rem;
+            border-radius: 999px;
+            background: color-mix(in srgb, var(--accent) 18%, var(--bg-elev) 82%);
+            color: var(--text);
+            border: 1px solid color-mix(in srgb, var(--accent) 35%, var(--border) 65%);
+            font-weight: 600;
+            letter-spacing: .25px
+        }
+
+        .cta {
+            display: flex;
+            gap: .8rem;
+            margin-top: 1.2rem
+        }
+
+        .btn {
+            background: var(--accent);
+            color: #001018;
+            border: none;
+            padding: .9rem 1.1rem;
+            border-radius: 12px;
+            font-weight: 700;
+            text-decoration: none;
+            box-shadow: var(--shadow);
+            transition: transform .2s ease, box-shadow .2s ease, filter .2s ease;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            filter: brightness(1.05)
+        }
+
+        .btn.secondary {
+            background: transparent;
+            color: var(--text);
+            border: 1px solid var(--border)
+        }
+
+        .btn.secondary:hover {
+            background: var(--bg-elev)
+        }
+
+        .hero .portrait {
+            justify-self: center;
+            width: 300px;
+            height: 300px;
+            border-radius: 100px;
+            overflow: hidden;
+            border: 1px solid var(--border);
+            background: var(--card);
+            display: grid;
+            place-items: center;
+            box-shadow: var(--shadow)
+        }
+
+        .hero .portrait img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover
+        }
+
+        /* Cards grid */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 1.2rem
+        }
+
+        .card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 1.1rem;
+            transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease
+        }
+
+        .card:hover {
+            transform: translateY(-6px);
+            box-shadow: var(--shadow);
+            border-color: color-mix(in srgb, var(--accent) 45%, var(--border) 55%)
+        }
+
+        .card h3 {
+            margin: .2rem 0 .5rem;
+            font-size: 1.05rem
+        }
+
+        .card p {
+            color: var(--muted);
+            font-size: .95rem
+        }
+
+        .chips {
+            display: flex;
+            flex-wrap: wrap;
+            gap: .5rem;
+            margin-top: .75rem
+        }
+
+        .chip {
+            font-size: .75rem;
+            padding: .25rem .55rem;
+            border-radius: 999px;
+            border: 1px solid var(--border);
+            color: var(--muted)
+        }
+
+        /* Blogs */
+        .blog-item {
+            display: flex;
+            gap: 1rem;
+            padding: 1rem;
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            background: var(--card);
+            align-items: flex-start;
+            transition: transform .2s, box-shadow .2s
+        }
+
+        .blog-item:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow)
+        }
+
+        .blog-item time {
+            color: var(--muted);
+            font-size: .85rem
+        }
+
+        /* Contact */
+        .contact {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.4rem
+        }
+
+        .contact form {
+            background: var(--card);
+            border: 1px solid var(--border);
+            padding: 1.2rem;
+            border-radius: 16px
+        }
+
+        .row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: .8rem
+        }
+
+        input,
+        textarea {
+            width: 100%;
+            background: var(--bg-elev);
+            color: var(--text);
+            border: 1px solid var(--border);
+            padding: .9rem 1rem;
+            border-radius: 10px;
+            font: inherit
+        }
+
+        textarea {
+            min-height: 140px;
+            resize: vertical
+        }
+
+        input:focus,
+        textarea:focus {
+            outline: 2px solid color-mix(in srgb, var(--accent) 40%, transparent)
+        }
+
+        footer {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 1.5rem 1.2rem 3.5rem;
+            color: var(--muted)
+        }
+
+        /* Floating socials */
+        .socials {
+            display: flex;
+            gap: .6rem;
+        }
+
+        .icon-btn {
+            width: 42px;
+            height: 42px;
+            display: grid;
+            place-items: center;
+            border-radius: 10px;
+            border: 1px solid var(--border);
+            background: var(--bg-elev);
+            color: var(--text);
+            transition: transform .2s, background .2s
+        }
+
+        .icon-btn:hover {
+            transform: translateY(-3px);
+            background: color-mix(in srgb, var(--accent) 12%, var(--bg-elev) 88%)
+        }
+
+        /* Chatbot */
+        .chat-launcher {
+            position: fixed;
+            right: 18px;
+            bottom: 18px;
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            border: none;
+            display: grid;
+            place-items: center;
+            background: var(--accent);
+            color: #001018;
+            box-shadow: var(--shadow);
+            cursor: pointer;
+            z-index: 1001
+        }
+
+        .chat-panel {
+            position: fixed;
+            right: 18px;
+            bottom: 86px;
+            width: min(380px, calc(100vw - 36px));
+            height: 520px;
+            display: none;
+            grid-template-rows: auto 1fr auto;
+            background: var(--bg-elev);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            z-index: 1001
+        }
+
+        .chat-panel.open {
+            display: grid
+        }
+
+        .chat-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: .9rem 1rem;
+            border-bottom: 1px solid var(--border)
+        }
+
+        .chat-header strong {
+            font-size: 1rem
+        }
+
+        .chat-log {
+            padding: 1rem;
+            overflow: auto;
+            display: flex;
+            flex-direction: column;
+            gap: .7rem
+        }
+
+        .msg {
+            max-width: 85%;
+            padding: .7rem .9rem;
+            border-radius: 14px;
+            border: 1px solid var(--border);
+            font-size: .95rem
+        }
+
+        .msg.user {
+            align-self: flex-end;
+            background: color-mix(in srgb, var(--accent) 20%, var(--bg-elev) 80%)
+        }
+
+        .msg.bot {
+            align-self: flex-start;
+            background: var(--card)
+        }
+
+        .chat-input {
+            display: flex;
+            gap: .5rem;
+            padding: .9rem;
+            border-top: 1px solid var(--border);
+            background: var(--bg-elev)
+        }
+
+        .chat-input input {
+            flex: 1;
+            padding: .85rem 1rem;
+            border-radius: 999px
+        }
+
+        .chat-input button {
+            padding: .85rem 1rem;
+            border-radius: 10px
+        }
+
+        /* Responsive */
+        @media (max-width: 900px) {
+            .hero {
+                grid-template-columns: 1fr;
+                text-align: center
+            }
+
+            .hero .cta {
+                justify-content: center
+            }
+
+            .contact {
+                grid-template-columns: 1fr
+            }
+
+            .grid {
+                grid-template-columns: 1fr 1fr
+            }
+        }
+
+        @media (max-width: 640px) {
+            .grid {
+                grid-template-columns: 1fr
+            }
+
+            .links {
+                display: none
+            }
+        }
+
+        .dynamic-role {
+            color: var(--accent);
+            font-weight: 600;
+            border-right: 2px solid var(--accent);
+            padding-right: 4px;
+            animation: blink 0.8s infinite;
+        }
+
+        @keyframes blink {
+            50% {
+                border-color: transparent;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Header -->
+    <header>
+        <nav class="nav">
+            <div class="brand">
+                <img src="user.png" alt="Avatar" onerror="this.style.display='none'" />
+                <span>Jayanth Kumar • Portfolio</span>
+            </div>
+            <div class="links">
+                <a href="#home" class="active">Home</a>
+                <a href="#about">About</a>
+                <a href="#projects">Projects</a>
+                <a href="#blogs">Blogs</a>
+                <a href="#contact">Contact</a>
+            </div>
+            <button class="toggle" id="themeToggle" aria-label="Toggle theme">
+                <i class='bx bx-moon'></i>
+                <span>Theme</span>
+            </button>
+        </nav>
+    </header>
+
+    <!-- Home -->
+    <section id="home" class="hero">
+        <div>
+            <span class="tag">AI & Data Science</span>
+            <h1>Hello, I'm <span style="color:var(--accent)">Jayanth Kumar</span>.<br />
+                <span class="dynamic-role" id="roleText"></span>
+            </h1>
+            <p>I build intelligent and impactful solutions across <strong>Machine Learning</strong>, <strong>Generative
+                    AI</strong>, <strong>NLP</strong>, <strong>Deep Learning</strong>, and <strong>Computer
+                    Vision</strong>. Explore my projects below—or ask my chatbot about any of them.</p>
+            <div class="cta">
+                <a class="btn" href="#projects"><i class='bx bx-rocket'></i>&nbsp;View Projects</a>
+                <a class="btn secondary" href="./CEERNAM_JAYANTH_KUMAR RESUME [1].pdf" download><i
+                        class='bx bx-download'></i>&nbsp;Download CV</a>
+            </div>
+            <div style="margin-top:1.1rem" class="socials">
+                <a class="icon-btn" href="https://www.linkedin.com/in/jayanthkumar-ceernam/" target="_blank"
+                    aria-label="LinkedIn"><i class='bx bxl-linkedin'></i></a>
+                <a class="icon-btn" href="#" aria-label="GitHub"><i class='bx bxl-github'></i></a>
+                <a class="icon-btn" href="#" aria-label="Twitter"><i class='bx bxl-twitter'></i></a>
+                <a class="icon-btn" href="mailto:ceeernamjayanth@gmail.com" target="_blank" aria-label="Email"><i
+                        class='bx bx-envelope'></i></a>
+            </div>
+        </div>
+        <div class="portrait">
+            <img src="./Jayanth Kumar.jpg" alt="Jayanth portrait"
+                onerror="this.src='https://picsum.photos/600/600?grayscale'" />
+        </div>
+    </section>
+
+    <!-- About -->
+    <section id="about">
+        <h2>About</h2>
+        <p style="color:var(--muted); max-width:70ch">I'm an AI & Data Science student focused on practical,
+            project‑driven learning. I enjoy turning ideas into working prototypes, writing clean code, and documenting
+            results. Interests include model deployment, MLOps basics, and building tooling that makes ML usable.</p>
+
+        <div class="grid" style="margin-top:1rem">
+            <div>
+                <div class="card" onclick="navigateto('skills.html')">
+
+                    <h3>Skills</h3>
+                    <p>Python, NumPy, Pandas, Scikit‑learn, PyTorch, OpenCV, LangChain, FastAPI</p>
+                    <div class="chips"><span class="chip">ML</span><span class="chip">NLP</span><span
+                            class="chip">CV</span><span class="chip">GenAI</span></div>
+                </div>
+                </a>
+            </div>
+            <div class="card">
+                <h3>Tools</h3>
+                <p>VS Code, Git/GitHub, Jupyter, Docker (basics), Postman, Figma</p>
+                <div class="chips"><span class="chip">Git</span><span class="chip">Docker</span><span
+                        class="chip">Figma</span></div>
+            </div>
+            <div class="card" onclick="navigateto('Education.html')">
+                <h3>Education</h3>
+                <p>B.Tech — Artificial Intelligence & Data Science</p>
+                <div class="chips"><span class="chip">2022–2026</span></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects -->
+    <section id="projects">
+        <h2>Projects</h2>
+        <div class="grid" style="margin-top:1rem">
+            <article class="card">
+                <h3>VisionGuard — Real‑time Helmet Detection</h3>
+                <p>YOLOv8‑based detector that flags missing helmets on riders from CCTV streams; exports alerts via
+                    webhook.</p>
+                <div class="chips"><span class="chip">YOLOv8</span><span class="chip">OpenCV</span><span
+                        class="chip">FastAPI</span></div>
+            </article>
+            <article class="card">
+                <h3>ChatDocs — RAG over Project Reports</h3>
+                <p>Ask questions about my PDFs and READMEs. Uses embeddings and retrieval with citation snippets.</p>
+                <div class="chips"><span class="chip">LangChain</span><span class="chip">Pinecone</span><span
+                        class="chip">OpenAI</span></div>
+            </article>
+            <article class="card">
+                <h3>SalesPredict — ML Regression</h3>
+                <p>End‑to‑end pipeline: EDA → feature engineering → model selection → REST inference API.</p>
+                <div class="chips"><span class="chip">Pandas</span><span class="chip">Scikit‑learn</span><span
+                        class="chip">FastAPI</span></div>
+            </article>
+        </div>
+    </section>
+
+    <!-- Blogs -->
+    <section id="blogs">
+        <h2>Blogs</h2>
+        <div class="grid" style="margin-top:1rem">
+            <a class="blog-item" href="#" target="_blank" rel="noreferrer">
+                <div>
+                    <h3>From Notebook to API: Shipping your first ML model</h3>
+                    <time>Aug 2025</time>
+                </div>
+            </a>
+            <a class="blog-item" href="#" target="_blank" rel="noreferrer">
+                <div>
+                    <h3>RAG in 15 minutes: a practical guide</h3>
+                    <time>Jul 2025</time>
+                </div>
+            </a>
+            <a class="blog-item" href="#" target="_blank" rel="noreferrer">
+                <div>
+                    <h3>5 tips to make CV projects stand out</h3>
+                    <time>Jun 2025</time>
+                </div>
+            </a>
+
+        </div>
+    </section>
+
+    <!-- Contact -->
+    <section id="contact">
+        <h2>Contact</h2>
+        <div class="contact" style="margin-top:1rem">
+            <form onsubmit="event.preventDefault(); alert('Thanks! I will get back to you.');">
+                <div class="row">
+                    <input type="text" placeholder="Your name" required />
+                    <input type="email" placeholder="Email" required />
+                </div>
+                <input type="text" placeholder="Subject" style="margin-top:.8rem" />
+                <textarea placeholder="Your message" style="margin-top:.8rem"></textarea>
+                <div style="display:flex; gap:.6rem; margin-top:.8rem">
+                    <button class="btn" type="submit"><i class='bx bx-send'></i>&nbsp;Send</button>
+                    <a class="btn secondary" href="mailto:you@example.com"><i class='bx bx-envelope'></i>&nbsp;Email
+                        me</a>
+                </div>
+            </form>
+            <div class="card">
+                <h3>Availability</h3>
+                <p>Open to internships and freelance projects in ML, GenAI, NLP, and CV.</p>
+                <div class="chips"><span class="chip">Remote</span><span class="chip">Hybrid</span></div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <small>© <span id="year"></span> Jayanth Kumar. All rights reserved.</small>
+    </footer>
+
+    <!-- Chatbot UI (connects to your Python backend) -->
+    <button class="chat-launcher" id="chatLauncher" title="Chat with my AI bot"><i
+            class='bx bx-message-rounded-dots'></i></button>
+    <aside class="chat-panel" id="chatPanel" aria-live="polite">
+        <div class="chat-header">
+            <strong>Jayanth's Project Bot</strong>
+            <div style="display:flex; gap:.4rem; align-items:center">
+                <button class="icon-btn" id="clearChat" title="Clear chat"><i class='bx bx-trash'></i></button>
+                <button class="icon-btn" id="closeChat" title="Close"><i class='bx bx-x'></i></button>
+            </div>
+        </div>
+        <div class="chat-log" id="chatLog">
+            <div class="msg bot">Hi! I'm trained on Jayanth's projects. Ask me anything about his work, stack, or
+                results.</div>
+        </div>
+        <div class="chat-input">
+            <input id="chatInput" type="text" placeholder="Type your question…" />
+            <button class="btn" id="sendBtn"><i class='bx bx-send'></i></button>
+        </div>
+    </aside>
+
+    <script>
+        // ======= Theme Toggle =======
+        const root = document.documentElement;
+        const themeToggle = document.getElementById('themeToggle');
+        const storedTheme = localStorage.getItem('theme');
+        if (storedTheme) document.documentElement.setAttribute('data-theme', storedTheme);
+        themeToggle.addEventListener('click', () => {
+            const current = document.documentElement.getAttribute('data-theme') || 'dark';
+            const next = current === 'dark' ? 'light' : 'dark';
+            document.documentElement.setAttribute('data-theme', next);
+            localStorage.setItem('theme', next);
+            themeToggle.querySelector('i').className = next === 'dark' ? 'bx bx-moon' : 'bx bx-sun';
+        });
+
+        // ======= Active nav link on scroll =======
+        const links = Array.from(document.querySelectorAll('.links a'));
+        const sections = links.map(a => document.querySelector(a.getAttribute('href'))).filter(Boolean);
+        const obs = new IntersectionObserver((entries) => {
+            entries.forEach(e => {
+                if (e.isIntersecting) {
+                    links.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + e.target.id));
+                }
+            });
+        }, { threshold: 0.6 });
+        sections.forEach(s => obs.observe(s));
+
+        // ======= Footer year =======
+        document.getElementById('year').textContent = new Date().getFullYear();
+
+        // ======= Chatbot Frontend (connects to your Python backend) =======
+        const chatLauncher = document.getElementById('chatLauncher');
+        const chatPanel = document.getElementById('chatPanel');
+        const closeChat = document.getElementById('closeChat');
+        const clearChat = document.getElementById('clearChat');
+        const chatLog = document.getElementById('chatLog');
+        const chatInput = document.getElementById('chatInput');
+        const sendBtn = document.getElementById('sendBtn');
+
+        chatLauncher.addEventListener('click', () => chatPanel.classList.toggle('open'));
+        closeChat.addEventListener('click', () => chatPanel.classList.remove('open'));
+        clearChat.addEventListener('click', () => { chatLog.innerHTML = '<div class="msg bot">Chat cleared. Ask me about any project.</div>'; });
+
+        function addMsg(text, who = 'bot') {
+            const div = document.createElement('div');
+            div.className = `msg ${who}`;
+            div.textContent = text;
+            chatLog.appendChild(div);
+            chatLog.scrollTop = chatLog.scrollHeight;
+        }
+
+        async function sendMessage() {
+            const text = chatInput.value.trim();
+            if (!text) return;
+            addMsg(text, 'user');
+            chatInput.value = '';
+
+            // Placeholder streaming effect
+            const thinking = document.createElement('div');
+            thinking.className = 'msg bot';
+            thinking.textContent = 'Thinking…';
+            chatLog.appendChild(thinking);
+
+            try {
+                // === OPTION A: REST endpoint (FastAPI/Flask) ===
+                // Replace URL below with your Python backend endpoint
+                // Example FastAPI route:
+                // @app.post('/api/chat') def chat(req: ChatReq): return { 'reply': answer }
+                const res = await fetch('/api/chat', {
+                    method: 'POST', headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ message: text })
+                });
+                if (!res.ok) throw new Error('Network response was not ok');
+                const data = await res.json();
+                thinking.remove();
+                addMsg(data.reply || 'No reply field found. Make sure your backend returns {"reply": "..."}.', 'bot');
+            } catch (err) {
+                // If REST failed, fall back message with integration tips
+                thinking.remove();
+                addMsg('⚠️ Unable to reach chatbot backend. Ensure your Python server is running and /api/chat is correct.', 'bot');
+                console.error(err);
+            }
+        }
+
+        sendBtn.addEventListener('click', sendMessage);
+        chatInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') { sendMessage(); } });
+
+        // ===== OPTION B: WebSocket (commented sample) =====
+        // const ws = new WebSocket('ws://localhost:8000/ws');
+        // ws.onmessage = (evt)=> addMsg(JSON.parse(evt.data).reply, 'bot');
+        // function sendWS(){ ws.send(JSON.stringify({ message: chatInput.value })); chatInput.value=''; }
+        // ======= Rotating Role Typing Effect =======
+        const roles = ["Aspiring Machine Learning Developer", "NLP Engineer", "Deep Learning Engineer", "Computer Vision Engineer"];
+        let roleIndex = 0, charIndex = 0, deleting = false;
+        const roleEl = document.getElementById("roleText");
+
+        function typeEffect() {
+            const currentRole = roles[roleIndex];
+            if (!deleting) {
+                roleEl.textContent = currentRole.substring(0, charIndex + 1);
+                charIndex++;
+                if (charIndex === currentRole.length) {
+                    deleting = true;
+                    setTimeout(typeEffect, 1500);
+                    return;
+                }
+            } else {
+                roleEl.textContent = currentRole.substring(0, charIndex - 1);
+                charIndex--;
+                if (charIndex === 0) {
+                    deleting = false;
+                    roleIndex = (roleIndex + 1) % roles.length;
+                }
+            }
+            setTimeout(typeEffect, deleting ? 60 : 90);
+        }
+        typeEffect();
+        function navigateto(page) {
+            window.location.href = page;
+        }
+
+    </script>
+</body>
+
+</html>
