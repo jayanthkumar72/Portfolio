@@ -2,268 +2,508 @@
 <html lang="en" data-theme="dark">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Skills - Portfolio</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Skills & Certificates - Portfolio</title>
     <style>
-        /* Global Styles */
-        body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-            background: var(--bg);
-            color: var(--text);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 30px;
-            transition: background 0.4s, color 0.4s;
-        }
-
-        h1 {
-            color: var(--accent);
-            margin-bottom: 20px;
-        }
-
+        /* ---------- Theme colors ---------- */
         :root[data-theme="dark"] {
-            --bg: #0f172a;
-            --text: #ffffff;
-            --card-bg: #1e293b;
-            --accent: #0ef;
-            --progress-bg: #1e293b;
+            --bg: #0f1722;
+            --panel: #17202a;
+            --card: #12202a;
+            --muted: #9aa6b2;
+            --accent: #06f7ff;
+            --glass: rgba(255, 255, 255, 0.03);
+            --card-radius: 14px;
+            --text: #e6f0f6;
         }
 
         :root[data-theme="light"] {
-            --bg: #f9fafb;
-            --text: #111827;
-            --card-bg: #ffffff;
-            --accent: #2563eb;
-            --progress-bg: #d1d5db;
+            --bg: #f8fafc;
+            --panel: #ffffff;
+            --card: #f3f6f8;
+            --muted: #475569;
+            --accent: #0b5df2;
+            --glass: rgba(0, 0, 0, 0.03);
+            --card-radius: 12px;
+            --text: #0b1220;
         }
 
-        /* Skill Section */
-        .skills-container {
-            width: 80%;
-            max-width: 600px;
+        /* ---------- Base ---------- */
+        html,
+        body {
+            height: 100%;
+            margin: 0
+        }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: Inter, system-ui, Arial, sans-serif;
+            -webkit-font-smoothing: antialiased;
+            padding: 30px 28px;
+            box-sizing: border-box;
+        }
+
+        h1 {
+            text-align: center;
+            margin: 6px 0 20px;
+            color: var(--accent);
+            font-size: 30px;
+        }
+
+        .top-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* ---------- Theme toggle & back btn ---------- */
+        .controls {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .btn {
+            background: var(--panel);
+            color: var(--text);
+            border: none;
+            padding: 9px 12px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 14px;
+            box-shadow: 0 6px 14px rgba(2, 8, 23, 0.3);
+        }
+
+        .btn:hover {
+            transform: translateY(-2px)
+        }
+
+        .small-muted {
+            color: var(--muted);
+            font-size: 13px;
+        }
+
+        /* ---------- Skills ---------- */
+        .layout {
+            max-width: 1200px;
+            margin: 18px auto 40px;
+            display: grid;
+            grid-template-columns: 1fr 480px;
+            gap: 28px;
+            align-items: start;
+        }
+
+        @media (max-width:980px) {
+            .layout {
+                grid-template-columns: 1fr;
+                padding: 0 8px
+            }
+        }
+
+        .skills-panel {
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.02), transparent);
+            padding: 18px;
+            border-radius: var(--card-radius);
+            box-shadow: 0 8px 24px rgba(2, 8, 23, 0.35);
         }
 
         .skill {
-            margin-bottom: 20px;
+            margin-bottom: 18px;
         }
 
-        .skill-name {
+        .skill .label {
             display: flex;
             justify-content: space-between;
-            margin-bottom: 6px;
-            font-size: 16px;
+            margin-bottom: 8px;
+            font-weight: 600;
         }
 
         .progress-bar {
-            width: 100%;
+            background: var(--glass);
             height: 12px;
-            background: var(--progress-bg);
-            border-radius: 6px;
+            border-radius: 999px;
             overflow: hidden;
-            box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.3);
         }
 
         .progress {
             height: 100%;
-            background: linear-gradient(90deg, #0ef, #3b82f6);
-            border-radius: 6px;
             width: 0;
-            transition: width 1.2s ease-in-out;
+            border-radius: 999px;
+            transition: width 900ms cubic-bezier(.2, .9, .3, 1);
+            background: linear-gradient(90deg, var(--accent), #3b82f6);
+            box-shadow: inset 0 -2px 6px rgba(0, 0, 0, 0.35);
         }
 
-        /* Back Button */
-        .back-btn {
-            margin-top: 30px;
-            padding: 10px 20px;
-            background: var(--card-bg);
-            color: var(--text);
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 16px;
-            transition: 0.3s;
+        /* ---------- Certificates grid ---------- */
+        .cert-panel {
+            background: transparent;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
         }
 
-        .back-btn:hover {
-            background: var(--accent);
-            color: white;
-        }
-
-        /* Theme Toggle */
-        .theme-toggle {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            background: var(--card-bg);
-            border: none;
-            padding: 10px 15px;
-            border-radius: 8px;
-            cursor: pointer;
-            color: var(--text);
-            font-size: 14px;
-            transition: 0.3s;
-        }
-
-        .theme-toggle:hover {
-            background: var(--accent);
-            color: white;
-        }
-
-        /* Certificates Section */
-        .certificates {
-            margin-top: 50px;
-            width: 90%;
-            max-width: 900px;
-        }
-
-        .certificates h2 {
-            color: var(--accent);
-            margin-bottom: 20px;
+        .cert-panel h2 {
+            margin: 6px 0 6px;
             text-align: center;
+            color: var(--accent)
         }
 
-        .card-container {
+        .card-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-            gap: 20px;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 18px;
+        }
+
+        @media (max-width:700px) {
+            .card-grid {
+                grid-template-columns: 1fr
+            }
         }
 
         .card {
-            background: var(--card-bg);
-            border-radius: 12px;
+            background: var(--panel);
+            border-radius: 14px;
             overflow: hidden;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-            transition: transform 0.3s;
+            box-shadow: 0 10px 30px rgba(2, 8, 23, 0.45);
+            display: flex;
+            flex-direction: column;
+            transition: transform .18s ease, box-shadow .18s ease;
         }
 
         .card:hover {
-            transform: translateY(-5px);
+            transform: translateY(-6px)
         }
 
-        .card img {
+        .thumb {
             width: 100%;
-            height: 180px;
+            aspect-ratio: 16/10;
             object-fit: cover;
+            display: block;
+            cursor: pointer;
+            user-select: none;
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.02), transparent);
         }
 
         .card-content {
-            padding: 15px;
+            padding: 14px;
         }
 
         .card-content h3 {
-            margin: 0 0 10px;
-            color: var(--accent);
+            margin: 0 0 8px;
+            color: var(--accent)
         }
 
         .card-content p {
+            margin: 0;
+            color: var(--muted);
             font-size: 14px;
-            line-height: 1.4;
+            line-height: 1.45
+        }
+
+        /* ---------- Viewer overlay ---------- */
+        .viewer {
+            position: fixed;
+            inset: 0;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            backdrop-filter: blur(6px);
+        }
+
+        .viewer.visible {
+            display: flex
+        }
+
+        .viewer-backdrop {
+            position: absolute;
+            inset: 0;
+            background: rgba(2, 6, 12, 0.65);
+        }
+
+        .viewer-card {
+            position: relative;
+            max-width: 94vw;
+            max-height: 92vh;
+            width: min(1100px, 92vw);
+            background: var(--card);
+            border-radius: 12px;
+            box-shadow: 0 30px 80px rgba(2, 8, 23, 0.6);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: stretch;
+        }
+
+        .viewer-img-wrap {
+            flex: 1 1 auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 16px;
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.01), transparent);
+        }
+
+        .viewer-img {
+            max-width: 100%;
+            max-height: 80vh;
+            object-fit: contain;
+            border-radius: 6px;
+            box-shadow: 0 12px 36px rgba(0, 0, 0, 0.6);
+            transition: transform .25s cubic-bezier(.2, .9, .3, 1);
+        }
+
+        /* header/footer inside viewer */
+        .viewer-header {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 12px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.02);
+            background: transparent;
+        }
+
+        .viewer-caption {
+            padding: 12px 16px;
+            color: var(--muted);
+            font-size: 14px;
+            border-top: 1px solid rgba(255, 255, 255, 0.02);
+            background: var(--panel);
+        }
+
+        /* close button (top-right) */
+        .close-btn {
+            background: transparent;
+            color: var(--text);
+            border: 1px solid rgba(255, 255, 255, 0.03);
+            width: 40px;
+            height: 36px;
+            border-radius: 10px;
+            display: inline-grid;
+            place-items: center;
+            cursor: pointer;
+            font-size: 18px;
+        }
+
+        .close-btn:hover {
+            background: rgba(255, 255, 255, 0.02);
+            transform: translateY(-2px)
+        }
+
+        /* small helper */
+        .note {
+            font-size: 13px;
+            color: var(--muted)
         }
     </style>
 </head>
 
 <body>
-    <!-- Theme Switch Button -->
-    <button class="theme-toggle" onclick="toggleTheme()">🌙 Dark</button>
-
-    <h1>My Skills</h1>
-
-    <!-- Skills Section -->
-    <div class="skills-container">
-        <div class="skill">
-            <div class="skill-name">
-                <span>GenAI</span><span>60%</span>
-            </div>
-            <div class="progress-bar">
-                <div class="progress" data-value="60"></div>
-            </div>
-        </div>
-
-        <div class="skill">
-            <div class="skill-name">
-                <span>Python</span><span>75%</span>
-            </div>
-            <div class="progress-bar">
-                <div class="progress" data-value="75"></div>
-            </div>
-        </div>
-
-        <div class="skill">
-            <div class="skill-name">
-                <span>JavaScript</span><span>50%</span>
-            </div>
-            <div class="progress-bar">
-                <div class="progress" data-value="50"></div>
-            </div>
+    <div class="top-row" style="max-width:1200px;margin:0 auto 6px;">
+        <h1>My Skills & Certificates</h1>
+        <div class="controls">
+            <button class="btn" onclick="goBack()">⬅ Back</button>
+            <button class="btn" id="themeToggle">🌙 Dark</button>
         </div>
     </div>
 
-    <!-- Certificates Section -->
-    <section class="certificates">
-        <h2>My Certificates</h2>
-        <div class="card-container">
-            <div class="card">
-                <img src="certificate1.jpg" alt="Certificate 1">
-                <div class="card-content">
-                    <h3>Python Programming</h3>
-                    <p>Certified by XYZ Institute. Learned advanced concepts in Python including data structures, OOP,
-                        and libraries.</p>
+    <div class="layout">
+        <!-- SKILLS -->
+        <section class="skills-panel">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+                <strong style="font-size:16px">Skills</strong>
+                <span class="note">Animated progress bars</span>
+            </div>
+
+            <div class="skill">
+                <div class="label"><span>GenAI</span><span>60%</span></div>
+                <div class="progress-bar">
+                    <div class="progress" data-value="60"></div>
                 </div>
             </div>
 
-            <div class="card">
-                <img src="certificate2.jpg" alt="Certificate 2">
-                <div class="card-content">
-                    <h3>Machine Learning</h3>
-                    <p>Issued by ABC Academy. Covered supervised & unsupervised ML algorithms, model evaluation, and
-                        deployment.</p>
+            <div class="skill">
+                <div class="label"><span>Python</span><span>75%</span></div>
+                <div class="progress-bar">
+                    <div class="progress" data-value="75"></div>
                 </div>
             </div>
 
-            <div class="card">
-                <img src="certificate3.jpg" alt="Certificate 3">
-                <div class="card-content">
-                    <h3>Web Development</h3>
-                    <p>Completed from DEF Platform. Focused on HTML, CSS, JavaScript, and building responsive websites.
-                    </p>
+            <div class="skill">
+                <div class="label"><span>JavaScript</span><span>50%</span></div>
+                <div class="progress-bar">
+                    <div class="progress" data-value="50"></div>
                 </div>
             </div>
+
+            <div style="margin-top:18px;" class="small-muted">
+                Tip: click any certificate image to open it full-size.
+            </div>
+        </section>
+
+        <!-- CERTIFICATES -->
+        <aside class="cert-panel">
+            <h2>My Certificates</h2>
+            <div class="card-grid">
+                <!-- Card 1 -->
+                <article class="card">
+                    <img class="thumb" src="./resources/certificate1.jpg" alt="Python Programming Certificate"
+                        data-title="Python Programming — XYZ Institute" loading="lazy">
+                    <div class="card-content">
+                        <h3>Python Programming</h3>
+                        <p>Certified by XYZ Institute. Advanced Python concepts, OOP and libraries.</p>
+                    </div>
+                </article>
+
+                <!-- Card 2 -->
+                <article class="card">
+                    <img class="thumb" src="./resources/certificate2.jpg" alt="Machine Learning Certificate"
+                        data-title="Machine Learning — ABC Academy" loading="lazy">
+                    <div class="card-content">
+                        <h3>Machine Learning</h3>
+                        <p>Covered supervised & unsupervised ML, evaluation and deployment.</p>
+                    </div>
+                </article>
+
+                <!-- Card 3 -->
+                <article class="card">
+                    <img class="thumb" src="./resources/certificate3.jpg" alt="Web Development Certificate"
+                        data-title="Web Development — DEF Platform" loading="lazy">
+                    <div class="card-content">
+                        <h3>Web Development</h3>
+                        <p>Focused on HTML, CSS, JS and building responsive apps.</p>
+                    </div>
+                </article>
+
+                <!-- Card 4 (Math certificate: use your path) -->
+                <article class="card">
+                    <img class="thumb" src="./resources/Maths_Certificate.jpg" alt="Mathematics Certificate"
+                        data-title="Mathematics — Krish Naik" loading="lazy">
+                    <div class="card-content">
+                        <h3>Mathematics</h3>
+                        <p>Completed intensive math for Data Science & GenAI (23 hrs).</p>
+                    </div>
+                </article>
+            </div>
+        </aside>
+    </div>
+
+    <!-- Viewer overlay -->
+    <div id="viewer" class="viewer" aria-hidden="true" role="dialog" aria-modal="true">
+        <div class="viewer-backdrop" id="viewerBackdrop"></div>
+
+        <div class="viewer-card" role="document" aria-label="Certificate preview">
+            <div class="viewer-header">
+                <button class="close-btn" id="closeBtn" title="Close (Esc)">✕</button>
+            </div>
+
+            <div class="viewer-img-wrap">
+                <img id="viewerImg" class="viewer-img" src="" alt="">
+            </div>
+
+            <div id="viewerCaption" class="viewer-caption"></div>
         </div>
-    </section>
-
-    <!-- Back Button -->
-    <button class="back-btn" onclick="goBack()">⬅ Back to Portfolio</button>
+    </div>
 
     <script>
-        // Animate skill bars
-        document.querySelectorAll('.progress').forEach(bar => {
-            const value = bar.getAttribute('data-value');
-            setTimeout(() => {
-                bar.style.width = value + '%';
-            }, 300);
+        // ---------- Back button ----------
+        function goBack() { window.location.href = "index.html"; }
+
+        // ---------- Theme toggle ----------
+        const root = document.documentElement;
+        const themeBtn = document.getElementById('themeToggle');
+        // Initialize default theme if not set:
+        if (!root.getAttribute('data-theme')) root.setAttribute('data-theme', 'dark');
+        function updateThemeButton() {
+            themeBtn.textContent = root.getAttribute('data-theme') === 'dark' ? '🌙 Dark' : '☀️ Light';
+        }
+        themeBtn.addEventListener('click', () => {
+            root.setAttribute('data-theme', root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
+            updateThemeButton();
+        });
+        updateThemeButton();
+
+        // ---------- Progress bar animation ----------
+        document.querySelectorAll('.progress').forEach(el => {
+            const v = Number(el.getAttribute('data-value') || 0);
+            // animate slightly after load for good effect
+            requestAnimationFrame(() => setTimeout(() => el.style.width = v + '%', 200));
         });
 
-        // Back button
-        function goBack() {
-            window.location.href = "index.html"; // Change this to your portfolio main file
+        // ---------- Viewer logic (click to enlarge) ----------
+        const thumbs = document.querySelectorAll('.thumb');
+        const viewer = document.getElementById('viewer');
+        const viewerImg = document.getElementById('viewerImg');
+        const viewerCaption = document.getElementById('viewerCaption');
+        const viewerBackdrop = document.getElementById('viewerBackdrop');
+        const closeBtn = document.getElementById('closeBtn');
+
+        function openViewer(imgEl) {
+            const src = imgEl.getAttribute('src');
+            const alt = imgEl.getAttribute('alt') || '';
+            const title = imgEl.getAttribute('data-title') || alt || 'Certificate';
+            // set image and caption
+            viewerImg.src = src;
+            viewerImg.alt = alt;
+            viewerCaption.textContent = title;
+            // show overlay
+            viewer.classList.add('visible');
+            viewer.setAttribute('aria-hidden', 'false');
+            // trap focus: focus close button
+            closeBtn.focus();
+            // prevent body scroll
+            document.body.style.overflow = 'hidden';
+            // subtle zoom in:
+            viewerImg.style.transform = 'scale(0.98)';
+            setTimeout(() => viewerImg.style.transform = 'scale(1)', 100);
         }
 
-        // Dark / Light Theme Toggle
-        function toggleTheme() {
-            const root = document.documentElement;
-            const btn = document.querySelector(".theme-toggle");
-
-            if (root.getAttribute("data-theme") === "dark") {
-                root.setAttribute("data-theme", "light");
-                btn.textContent = "☀️ Light";
-            } else {
-                root.setAttribute("data-theme", "dark");
-                btn.textContent = "🌙 Dark";
-            }
+        function closeViewer() {
+            viewer.classList.remove('visible');
+            viewer.setAttribute('aria-hidden', 'true');
+            viewerImg.src = '';
+            document.body.style.overflow = '';
         }
+
+        thumbs.forEach(t => {
+            t.addEventListener('click', e => openViewer(e.currentTarget));
+            // also keyboard accessibility
+            t.setAttribute('tabindex', '0');
+            t.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openViewer(e.currentTarget); } });
+        });
+
+        // close interactions
+        closeBtn.addEventListener('click', closeViewer);
+        viewerBackdrop.addEventListener('click', closeViewer);
+        // close on Esc
+        document.addEventListener('keydown', e => {
+            if (e.key === 'Escape' && viewer.classList.contains('visible')) closeViewer();
+        });
+
+        // click outside viewer-card closes it too (extra)
+        viewer.addEventListener('click', (e) => {
+            // if clicked the overlay (not the card)
+            if (e.target === viewer) closeViewer();
+        });
+
+        // Prevent accidental dragging of images
+        document.querySelectorAll('img').forEach(img => { img.draggable = false; });
+
+        // Accessibility: ensure focus returns to last thumbnail after close
+        let lastFocusedThumb = null;
+        thumbs.forEach(t => {
+            t.addEventListener('click', () => lastFocusedThumb = t);
+        });
+        closeBtn.addEventListener('click', () => { if (lastFocusedThumb) lastFocusedThumb.focus(); });
+
+        // Optional: if you want better images on click (higher res), replace `src` values on thumbs with low-res and
+        // add a `data-full` attribute pointing to the high-res image and change openViewer to use that attribute.
     </script>
 </body>
 
